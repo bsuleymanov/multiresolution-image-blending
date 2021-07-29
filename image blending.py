@@ -4,6 +4,7 @@ import jpeg4py as jpeg
 from pathlib import Path
 import math
 from matplotlib import pyplot as plt
+import imageio
 
 
 def image_to_tensor(image, device='cpu'):
@@ -90,12 +91,14 @@ def blend_images(image1, image2, device="cpu"):
 
 def main():
     image_dir = Path("./images")
+    out_dir = Path("./output")
     image1 = jpeg.JPEG(image_dir / "orange.jpeg").decode()
     image2 = jpeg.JPEG(image_dir / "apple.jpeg").decode()
     composition = blend_images(image1, image2)
     composition = tensor_to_image(composition)
     plt.imshow(composition)
     plt.show()
+    imageio.imsave(out_dir / "result.jpeg", composition)
 
 
 if __name__ == "__main__":
